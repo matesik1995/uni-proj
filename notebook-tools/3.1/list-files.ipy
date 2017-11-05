@@ -1,0 +1,4 @@
+#/usr/bin/env ipython
+
+cmd = !find . -size +4k -size -10k 
+print(cmd)
