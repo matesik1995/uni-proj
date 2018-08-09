@@ -1,0 +1,38 @@
+.patient {
+    font-family: 'Oxygen', sans-serif;
+    padding: 2rem 0;
+    background-color: #bbbbbb;
+}
+
+.patient:hover {
+    background-color: #999999;
+}
+
+.patient .name{
+	display: block;
+	width: 100%;
+	min-width: 100%;
+    padding: 0 20px;
+    font-size: 1.6rem;
+    font-weight: 700;
+}
+.patient .id {
+    font-size: 1.6rem;
+    font-weight: 200;
+}
+
+.patient .info {
+	position: relative;
+    max-width: 1200px;
+    margin: 10px auto;
+    background-color: #474e5d;
+    border: 10px solid #474e5d;
+    border-radius: 10px;
+}
+
+.patient .info ul li {
+	display: inline-block;
+	padding: 15px;
+	color: #fff;
+	font-size: 1.2em;
+}
