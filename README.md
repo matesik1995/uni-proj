@@ -2,7 +2,7 @@
 This repository contains minor university projects.
 
 | Branchname | Abbreviation | Description |
-| - | - |
+| - | - | - |
 | battleships | Battleships Game | Battleships game made as a project for Parallel programming classes |
 | eye-blood-vessels | In eye blood vessels recognition | Written in python using machine learning application to recognise blood vessles in eye. Project for IT in medicine classes. |
 | flow-shop | Flow Shop - Genetic Algorithm | Try to create best schedule for Flow Shop problem with usage of Genetic Algorithm. Project created for Combinatorial Optimisation classes.  |
