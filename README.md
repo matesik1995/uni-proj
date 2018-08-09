@@ -1,4 +1,4 @@
-# uni-proj
+﻿# Univeristy projects
 This repository contains minor university projects.
 
 | Branchname | Abbreviation | Description |
