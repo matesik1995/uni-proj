@@ -1,9 +1,9 @@
-# Lab 3 Data processing in Databases using python and in memory sqlite3 database
+# Lab 3 Data processing in Databases - python and in memory sqlite3 database
 ## Requirements:
-As this soultion keeps database in RAM you should ensure that before running app you have at least 4GB of free memory on your machine. Not fulfiling this requirement will slow processing down as SWAP memory will be used which is not the intention of script.
+As this solution keeps database in RAM you should ensure that before running app you have at least 4GB of free memory on your machine. Not fulfilling this requirement will slow processing down as SWAP memory will be used which is not the intention of the project.
 
 ## Dataset:
-Reduced Million Song Dataset is used by this project. It can be downloaded from following links and should be unpacked.
+Reduced Million Song Dataset is used within this project. It can be downloaded from following addresses and should be unpacked next to project files.
 ```
 http://www.cs.put.poznan.pl/kdembczynski/lectures/data/unique_tracks.zip
 http://www.cs.put.poznan.pl/kdembczynski/lectures/data/triplets_sample_20p.zip
