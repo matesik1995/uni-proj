@@ -15,8 +15,12 @@ def feed_table(conn, filename, query):
 
     start_time = timeit.default_timer()
     with open(filename, encoding='ISO-8859-2') as f:
+        i=0
         for line in f:
             c.execute(query, line[:-1].split("<SEP>"))
+            if i==10000000:
+                break
+            i+=1
     elapsed = timeit.default_timer() - start_time
 
     c.close()
@@ -69,9 +73,9 @@ def main():
     queries = [
         "SELECT S.band, S.title, COUNT() FROM plays P JOIN songs S ON P.song_id = S.song_id GROUP BY P.song_id ORDER BY COUNT() DESC LIMIT 10;",
         "SELECT user_id, COUNT(DISTINCT song_id) AS c FROM plays GROUP BY user_id ORDER BY c DESC LIMIT 10;",
-        "SELECT band, COUNT() AS c FROM songs S JOIN plays P ON S.song_id = P.song_id GROUP BY band ORDER BY c DESC LIMIT 1;",
+        "SELECT band, COUNT() AS c FROM plays P JOIN songs S ON P.song_id = S.song_id GROUP BY band ORDER BY c DESC LIMIT 1;",
         "SELECT strftime('%m', play_date, 'unixepoch') AS m, COUNT() FROM plays GROUP BY m ORDER BY m;",
-        "SELECT user_id FROM plays WHERE song_id IN (SELECT S.song_id FROM songs S JOIN plays P ON S.song_id = P.song_id WHERE S.band = 'Queen' GROUP BY S.song_id ORDER BY COUNT() DESC LIMIT 3) GROUP BY user_id HAVING COUNT(DISTINCT song_id) = 3 LIMIT 10;"
+        "SELECT user_id FROM plays WHERE song_id IN (SELECT S.song_id FROM songs S JOIN plays P ON S.song_id = P.song_id WHERE S.band = 'Queen' GROUP BY S.song_id ORDER BY COUNT() DESC LIMIT 3) GROUP BY user_id HAVING COUNT(DISTINCT song_id) = 3 ORDER BY user_id LIMIT 10;"
     ]
     for query in queries:
         result = execute_query(conn, query)
@@ -81,7 +85,6 @@ def main():
     log.info("Total time elapsed: %s", elapsed)
 
     log.info("Closing connection")
-    conn.commit()
     conn.close()
 
 
