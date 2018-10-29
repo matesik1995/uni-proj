@@ -71,7 +71,7 @@ def main():
         "SELECT user_id, COUNT(DISTINCT song_id) AS c FROM plays GROUP BY user_id ORDER BY c DESC LIMIT 10;",
         "SELECT band, COUNT() AS c FROM songs S JOIN plays P ON S.song_id = P.song_id GROUP BY band ORDER BY c DESC LIMIT 1;",
         "SELECT strftime('%m', play_date, 'unixepoch') AS m, COUNT() FROM plays GROUP BY m ORDER BY m;",
-        "SELECT user_id FROM plays WHERE song_id IN (SELECT S.song_id FROM songs S JOIN plays P ON S.song_id = P.song_id WHERE S.band = 'Queen' GROUP BY S.song_id ORDER BY COUNT() DESC LIMIT 3) GROUP BY user_id HAVING COUNT(DISTINCT song_id) = 3;"
+        "SELECT user_id FROM plays WHERE song_id IN (SELECT S.song_id FROM songs S JOIN plays P ON S.song_id = P.song_id WHERE S.band = 'Queen' GROUP BY S.song_id ORDER BY COUNT() DESC LIMIT 3) GROUP BY user_id HAVING COUNT(DISTINCT song_id) = 3 LIMIT 10;"
     ]
     for query in queries:
         result = execute_query(conn, query)
