@@ -15,12 +15,8 @@ def feed_table(conn, filename, query):
 
     start_time = timeit.default_timer()
     with open(filename, encoding='ISO-8859-2') as f:
-        i=0
         for line in f:
             c.execute(query, line[:-1].split("<SEP>"))
-            if i==10000000:
-                break
-            i+=1
     elapsed = timeit.default_timer() - start_time
 
     c.close()
