@@ -27,6 +27,8 @@ docker rm python_sqlite_in_memory_container
 
 ## Results:
 
+Total execution time takes ~240 seconds on my machine (i5 4210H, 8GB ram)
+Creating separate dimension table for data field takes much more space, time and do not improve total execution, so it was abadoned.
 ```
 Dwight Yoakam You're The One 145267
 Björk Undo 129778
@@ -35,9 +37,9 @@ Harmonia Sehr kosmisch 84981
 Barry Tuckwell/Academy of St Martin-in-the-Fields/Sir Neville Marriner Horn Concerto No. 4 in E flat K495: II. Romance (Andante cantabile) 77632
 Florence + The Machine Dog Days Are Over (Radio Edit) 71300
 OneRepublic Secrets 58472
-Kings Of Leon Use Somebody 58458
 Five Iron Frenzy Canada 54655
 Tub Ring Invalid 53494
+Sam Cooke Ain't Misbehavin 49073
 ec6dfcf19485cb011e0b22637075037aae34cf26 1040
 119b7c88d58d0c6eb051365c103da5caf817bea6 641
 b7c24f770be6b802805ac0e2106624a517643c17 637
