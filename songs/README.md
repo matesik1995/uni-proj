@@ -1,6 +1,6 @@
 # Lab 3 Data processing in Databases - python and in memory sqlite3 database
 ## Requirements:
-As this solution keeps database in RAM you should ensure that before running app you have at least 4GB of free memory on your machine. Not fulfilling this requirement will slow processing down as SWAP memory will be used which is not the intention of the project.
+As this solution keeps database in RAM you should ensure that before running app you have at least 8GB of free memory on your machine. Not fulfilling this requirement will slow processing down as SWAP memory will be used which is not the intention of the project.
 
 ## Dataset:
 Reduced Million Song Dataset is used within this project. It can be downloaded from following addresses and should be unpacked next to project files.
@@ -25,10 +25,16 @@ docker stop python_sqlite_in_memory_container
 docker rm python_sqlite_in_memory_container
 ```
 
+## Database schema
+
+![schema](schema.png)
+
 ## Results:
 
 Total execution time takes ~240 seconds on my machine (i5 4210H, 8GB ram)
-Creating separate dimension table for data field takes much more space, time and do not improve total execution, so it was abadoned.
+
+Update: Actually, after applying changes related to task update results are much worse and upper one are not valid anymore.
+Creating separate dimension table for data field takes much more space, time and do not improve total execution. My machine could not handle all needed data within RAM and swap was used. Total execution time takes ~1300 seconds which is 5 times more than before. Version without it can be fonud [here](https://github.com/matesik1995/uni-proj/tree/5e0d652515e3569c95fa800697fbba5e929b8844).
 ```
 Dwight Yoakam You're The One 145267
 Björk Undo 129778

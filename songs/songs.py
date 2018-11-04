@@ -44,11 +44,21 @@ def create_plays_table(conn):
     song_id TEXT, 
     play_date INTEGER,
     FOREIGN KEY (song_id) REFERENCES songs(song_id)
+    FOREIGN KEY (play_date) REFERENCES dates(play_date)
+    );
+    """)
+
+    c.execute("""
+    CREATE TABLE dates (
+    play_date INTEGER PRIMARY KEY,
+    play_month INTEGER
     );
     """)
 
     with open("triplets_sample_20p.txt", encoding='ISO-8859-2') as f:
         for line in f:
+            values = line[:-1].split("<SEP>")
+            c.execute("INSERT OR IGNORE INTO dates VALUES (?, strftime('%m', ?, 'unixepoch'));", (values[2], values[2]))
             c.execute("INSERT INTO plays VALUES (?, ?, ?);", line[:-1].split("<SEP>"))
 
     c.execute("CREATE INDEX plays_idx_song_id ON plays(song_id);")
@@ -99,7 +109,7 @@ def main():
         "SELECT S.title, S.band, COUNT() FROM plays P NATURAL JOIN songs S GROUP BY P.song_id ORDER BY COUNT() DESC LIMIT 10;",
         "SELECT user_id, COUNT(DISTINCT song_id) AS c FROM plays GROUP BY user_id ORDER BY c DESC LIMIT 10;",
         "SELECT S.band, COUNT() AS c FROM plays P NATURAL JOIN songs S GROUP BY band ORDER BY c DESC LIMIT 1;",
-        "SELECT strftime('%m', play_date, 'unixepoch') AS m, COUNT() FROM plays GROUP BY m ORDER BY m;",
+        "SELECT play_month AS m, COUNT() FROM plays NATURAL JOIN dates GROUP BY m ORDER BY m;",
         "SELECT user_id FROM plays WHERE song_id IN (SELECT S.song_id FROM songs S NATURAL JOIN plays P WHERE S.band = 'Queen' GROUP BY S.song_id ORDER BY COUNT() DESC LIMIT 3) GROUP BY user_id HAVING COUNT(DISTINCT song_id) = 3 ORDER BY user_id LIMIT 10;"
     ]
 
