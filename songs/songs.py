@@ -96,7 +96,7 @@ def main():
     create_plays_table(conn)
 
     queries = [
-        "SELECT S.band, S.title, COUNT() FROM plays P NATURAL JOIN songs S GROUP BY P.song_id ORDER BY COUNT() DESC LIMIT 10;",
+        "SELECT S.title, S.band, COUNT() FROM plays P NATURAL JOIN songs S GROUP BY P.song_id ORDER BY COUNT() DESC LIMIT 10;",
         "SELECT user_id, COUNT(DISTINCT song_id) AS c FROM plays GROUP BY user_id ORDER BY c DESC LIMIT 10;",
         "SELECT S.band, COUNT() AS c FROM plays P NATURAL JOIN songs S GROUP BY band ORDER BY c DESC LIMIT 1;",
         "SELECT strftime('%m', play_date, 'unixepoch') AS m, COUNT() FROM plays GROUP BY m ORDER BY m;",
