@@ -4,7 +4,9 @@ RESULT_FILENAME = 'result.txt'
 NEIGHBOURS_COUNT = 100
 
 def jaccard(a: set, b: set):
-	return len(a.intersection(b)) / len(a.union(b))
+	inter = len(a.intersection(b))
+	union = len(a) + len(b) - inter
+	return inter / union
 
 class User:
 	__slots__ = ['id', 'songs', 'similarity']
@@ -82,5 +84,4 @@ if __name__=="__main__":
 		write_result(user, f)
 	f.close()
 	print("Koniec")
-		
-			
+
