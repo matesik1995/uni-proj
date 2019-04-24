@@ -14,3 +14,4 @@ This repository contains minor university projects.
 | tomograph | Tomograph simulation | Imitates and shows how tomograph work. Project for IT in medicine classes. | 
 | ptsz | Podstawy teori szeregowania zadan | Basics of scheduling theory |
 | pmd | Przetwarzanie masywnych danych | Processing of massive datasets |
+| teradata-profiler | TeraData Profiler | Profile data in tables within TeraData database. Student project made for Santander Bank, during Data Warehouse classes |
