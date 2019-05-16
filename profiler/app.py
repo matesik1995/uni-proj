@@ -37,11 +37,18 @@ STATISTICS_QUERY_BY_TYPE = {
 	"BF": """record_count-COUNT(%col%) AS %col%_nulls,
 			 COUNT(DISTINCT %col%) AS %col%_distincts""", # fixed binary
 	"BV": """record_count-COUNT(%col%) AS %col%_nulls,
-			 COUNT(DISTINCT %col%) AS %col%_distincts""", # var. binary
-	# TODO: implement rest of the column type queries found in sample data
-	"I2": "CAST(0 AS INTEGER) as %col%__UNKNOWN_COLUMN_TYPE",
-	"DA": "CAST(0 AS INTEGER) as %col%__UNKNOWN_COLUMN_TYPE",
-	"AT": "CAST(0 AS INTEGER) as %col%__UNKNOWN_COLUMN_TYPE"
+			 COUNT(DISTINCT %col%) AS %col%_distincts""", # var. binary 
+	"I2": """record_count-COUNT(CAST(%col% as BIGINT)) AS %col%_nulls, 
+			COUNT(DISTINCT CAST(%col% as BIGINT)) AS %col%_distincts,
+			MIN(CAST(%col% as BIGINT)) %col%_minimum, 
+			MAX(CAST(%col% as BIGINT)) as %col%_maximum, 
+			SUM(CAST(%col% as BIGINT)) as %col%_sum,
+			ROUND(STDDEV_POP(CAST(%col% as BIGINT)), 2) as %col%_standard_deviation, 
+			AVG(CAST(%col% as BIGINT)) as %col%_mean""", # SMALLINT
+	"DA": """record_count-COUNT(%col%) AS %col%_nulls,
+			 COUNT(DISTINCT %col%) AS %col%_distincts""", # DATE
+	"AT": """record_count-COUNT(%col%) AS %col%_nulls,
+			 COUNT(DISTINCT %col%) AS %col%_distincts""" # TIME
 }
 
 
