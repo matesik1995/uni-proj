@@ -1,6 +1,7 @@
 import teradata
 from datetime import datetime
 import argparse
+import csv
 
 
 STATISTICS_QUERY_BY_TYPE = {
@@ -75,40 +76,54 @@ class Column:
 		return "Column(name='{}', type='{}')".format(self.name, self.type)
 	
 	
-def main(table_names):
+def main(database_name, table_names, output_fn):
 	udaExec = teradata.UdaExec()
-	with udaExec.connect(method="${method}", dsn="${dsn}") as session:
-		_tables = {}
-		for row in session.execute("SELECT TRIM(TableName) as table_name, TRIM(ColumnName) as column_name, TRIM(ColumnType) as column_type FROM dbc.columns WHERE DatabaseName = '${dbName}';"):
-			_tables.setdefault(row.table_name, Table(row.table_name)).add_column(Column(row.column_name, row.column_type))
-		
-		tables = {}
-		if len(table_names) == 0:
-			tables = _tables
-		else:
-			for t in table_names:
-				if t not in _tables.keys():
-					raise AttributeError("Invalid input table name: '{}' is not one of {}".format(t, _tables.keys()))
-				tables[t] = _tables[t] 
-		 
-		for table in tables.values():
-			print("Processing table: {}".format(table))
-			stmnt = "SELECT COUNT(*) as record_count, "
-			stmnt += ", ".join([STATISTICS_QUERY_BY_TYPE[column.type].replace("%col%", column.name) for column in table.columns])
-			stmnt += " FROM ${dbName}." + table.name + ";"
+	with open(output_fn, 'w' ,newline='') as csvfile:
+		output = csv.writer(csvfile)
+		with udaExec.connect(method="${method}", dsn="${dsn}") as session:
+			_tables = {}
+			for row in session.execute("SELECT TRIM(TableName) as table_name, TRIM(ColumnName) as column_name, TRIM(ColumnType) as column_type FROM dbc.columns WHERE DatabaseName = '{database_name}';".format(database_name=database_name)):
+				_tables.setdefault(row.table_name, Table(row.table_name)).add_column(Column(row.column_name, row.column_type))
 			
-			print("Created statement: {}".format(stmnt))
-			t1 = datetime.now()
-			cur = session.execute(stmnt)
-			row = cur.fetchone()
-			t2 = datetime.now()
-			
-			print("Result: \n{}".format("\n".join([c + ": " + str(row[c]) for c in row.columns])))
-			print("Execution time: {}".format(t2 - t1))
+			tables = {}
+			if len(table_names) == 0:
+				tables = _tables
+			else:
+				for t in table_names:
+					if t not in _tables.keys():
+						raise AttributeError("Invalid input table name: '{}' is not one of {}".format(t, _tables.keys()))
+					tables[t] = _tables[t] 
+			 
+			for table in tables.values():
+				print("\n\nProcessing table: {}".format(table))
+				stmnt = "SELECT COUNT(*) as record_count, "
+				stmnt += ", ".join([STATISTICS_QUERY_BY_TYPE[column.type].replace("%col%", column.name) for column in table.columns])
+				stmnt += " FROM {database_name}.".format(database_name=database_name) + table.name + ";"
+				 
+				print("\n\nCreated statement: {}".format(stmnt))
+				t1 = datetime.now()
+				cur = session.execute(stmnt)
+				row = cur.fetchone()
+				execution_time = datetime.now() - t1
+				
+				print("\n\nResult:")
+				print(row.columns)
+				for column in row.columns:
+					try:
+						column_name, metric_name = column.split('___')
+					except ValueError:
+						column_name = '*'
+						metric_name = column
+					result_row = [table.name, column_name, metric_name, str(row[column]), str(execution_time)]
+					output.writerow(result_row)
+					print(result_row)
+				print("\n\nExecution time: {}".format(execution_time))
 		
 		
 if __name__=="__main__":
 	parser = argparse.ArgumentParser(description='TeraDataProfiler v0.1')
-	parser.add_argument('-t', '--tables', metavar='TABLE_NAME', nargs='*', default=[], help='list of tables to be processed.')
+	parser.add_argument('-d', '--database', default='vmtest', help='database name')
+	parser.add_argument('-t', '--tables', metavar='TABLE_NAME', nargs='*', default=[], help='list of tables to be processed')
+	parser.add_argument('-o', '--output', default='output.csv', help='output csv filename')
 	args = parser.parse_args()
-	main(args.tables)
+	main(args.database, args.tables, args.output)
