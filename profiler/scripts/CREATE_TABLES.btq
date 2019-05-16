@@ -1,0 +1,16 @@
+.logon 127.0.0.1/dbc, dbc;
+DATABASE vmtest;
+.run file = ./Tables_Definitions/ACCOUNT_DETAIL_PERIODIC.sql
+.run file = ./Tables_Definitions/ACCOUNT_ICBS_DEPOSIT_PERIODIC.sql
+.run file = ./Tables_Definitions/ACCOUNT_ICBS_LOAN_PERIODIC.sql
+.run file = ./Tables_Definitions/ACC_ICBS_CURRENT_PERIODIC.sql
+.run file = ./Tables_Definitions/CARD_ACCOUNT_REL.sql
+.run file = ./Tables_Definitions/CUSTOMER_ACCOUNT_REL_PERIODIC.sql
+.run file = ./Tables_Definitions/CUSTOMER_DETAIL2.sql
+.run file = ./Tables_Definitions/CUSTOMER_PERSONAL_DETAIL2.sql
+.run file = ./Tables_Definitions/CUSTOMER_STATIC_HISTORY.sql
+.run file = ./Tables_Definitions/CUST_PERSONAL_DET_STAT_HIST.sql
+.run file = ./Tables_Definitions/PRODUCT_BZWBK.sql
+.run file = ./Tables_Definitions/TRANSACTION_CARD_DETAIL_BZWBK.sql
+.run file = ./Tables_Definitions/TRANSACTION_DETAIL.sql
+.quit;
