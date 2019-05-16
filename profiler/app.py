@@ -49,6 +49,8 @@ STATISTICS_QUERY_BY_TYPE = {
 			 COUNT(DISTINCT %col%) AS %col%_distincts""", # DATE
 	"AT": """record_count-COUNT(%col%) AS %col%_nulls,
 			 COUNT(DISTINCT %col%) AS %col%_distincts""" # TIME
+	"TS": """record_count-COUNT(%col%) AS %col%_nulls,
+			 COUNT(DISTINCT %col%) AS %col%_distincts""" # TIME
 }
 
 
