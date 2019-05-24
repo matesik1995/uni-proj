@@ -181,7 +181,9 @@ Przykładowa konfiguracja:
 
 ### Uruchamianie skryptu
 Jesli konfiguracja jest poprawna skrpyt powinien wykonac sie bez problemu po wpisaniu ponizszej komendy:
+
 ```python app.py```
 
 Aby wyswietlic liste dostepnych parametrow, wpisz:
+
 ```python app.py --help```
