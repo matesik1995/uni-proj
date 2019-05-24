@@ -10,7 +10,7 @@ https://downloads.teradata.com/database/articles/teradata-express-14-0-for-vmwar
 - Tworzenie użytkownika
 https://docs.teradata.com/reader/u8~Pwz3BmiO8RrPCsqF7bQ/SeSeMcCgpZjIY5~i3Ky8cw
 - Python teradata module: https://pypi.org/project/teradata/
-- Windows ODBC driver: http://downloads.teradata.com/download/connectivity/odbc-driver/windows
+- Windows ODBC teradata driver: http://downloads.teradata.com/download/connectivity/odbc-driver/windows
 
 ## Inicjalizacja
 ### Utworzenie użytkownika vmtest
@@ -159,5 +159,28 @@ CF, BF, BV: record_count-COUNT(%col%) AS %col%_nulls, COUNT(DISTINCT %col%) AS %
 ### Pobieranie wszystkich nazw kolumn wraz z typami
 By pobrać wszystkie kolumny wraz z typami uruchom skrypt ```SHOW_ALL_TABLES.btq```
 
-### Skrypt do wykonywania zapytan
-```app.py```
+## Wykonywanie programu
+### Przygotowanie (windows)
+Jesli maszyna TeraData jest juz uruchomiona i odpowiednio skonfigurowana, mozemy przystapic do konfiguracji polaczenia z maszyna wirtualna.
+W tym celu nalezy najpierw zainstalowac sterownik ODBC TeraData (link u gory).
+
+### Zestawianie polaczenia
+Po zainstalowaniu wykonujemy nastepujące kroki:
+- Uruchom aplet Administrator ODBC
+- Aby dodać nowe połączenie liknij "Dodaj"
+- Z listy wybierz Teradata Database ODBC Driver i klinij "Zakończ"
+- Wypełnij pola kreatora
+* W polu "Name" wpisz nazwe swojego polaczenia (pamietaj, aby zgadzla sie ona z konfiguracja w pliku `udaexec.ini`.
+* W polu "Name or IP address" wpisz adres IP swojej maszyny wirtualnej Teradata
+* Uzupełnij pola "Username" i "Password"
+Przykładowa konfiguracja:
+![Przykladowa konfiguracja](konfiguracja.png)
+
+- klinkij "OK' aby zakonczyc konfiguracje
+
+### Uruchamianie skryptu
+Jesli konfiguracja jest poprawna skrpyt powinien wykonac sie bez problemu po wpisaniu ponizszej komendy:
+```python app.py```
+
+Aby wyswietlic liste dostepnych parametrow, wpisz:
+```python app.py --help```
