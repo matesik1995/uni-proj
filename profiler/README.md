@@ -174,7 +174,7 @@ Po zainstalowaniu wykonujemy nastepujące kroki:
 * W polu "Name or IP address" wpisz adres IP swojej maszyny wirtualnej Teradata
 * Uzupełnij pola "Username" i "Password"
 Przykładowa konfiguracja:
-![Przykladowa konfiguracja](konfiguracja.png)
+![Przykladowa konfiguracja](konfiguracja.PNG)
 
 - klinkij "OK' aby zakonczyc konfiguracje
 
