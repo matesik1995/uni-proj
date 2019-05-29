@@ -14,7 +14,7 @@ https://docs.teradata.com/reader/u8~Pwz3BmiO8RrPCsqF7bQ/SeSeMcCgpZjIY5~i3Ky8cw
 
 ## Inicjalizacja
 ### Utworzenie użytkownika vmtest
-By utworzyć użytkownika vmtest uruchom skrypt ```CREATE_USER.btq```
+By utworzyć bazę danych vmtest uruchom skrypt ```CREATE_DATABASE.btq```
 
 ### Tworzenie tabel w bazie danych
 By utworzyć tabele w bazie danych uruchom skrypt ```CREATE_TABLES.btq```
@@ -24,9 +24,8 @@ By utworzyć tabele w bazie danych uruchom skrypt ```CREATE_TABLES.btq```
 By usunąć wszystkie tabele z bazy danych uruchom skrypt ```DROP_ALL.btq``` 
 
 ### Wstawianie danych do tabeli
-https://www.tutorialspoint.com/teradata/teradata_multiload.htm
-Link do skryptów ładujących dane (hasło: wJ7dB8):
-https://drive.google.com/open?id=1rYOc-UX01f2yyX0-_gD5v-LLTbAE-3yI
+Dane ładowane są za pomocą komendy mload (https://www.tutorialspoint.com/teradata/teradata_multiload.htm)
+
 Użycie skryptów: ```mload < “plik ze skryptem”```
 
 Struktura katalogów:
