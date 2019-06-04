@@ -1,0 +1,93 @@
+$ python app.py -d vmtest -o full_profile.csv
+
+Processing table: CUSTOMER_PERSONAL_DETAIL2
+Created statement.
+Executing... DONE
+Execution time: 0:01:53.913328
+
+Writing results to file: full_profile.csv
+
+Processing table: ACCOUNT_ICBS_LOAN_PERIODIC
+Created statement.
+Executing... DONE
+Execution time: 0:01:13.350301
+
+Writing results to file: full_profile.csv
+
+Processing table: CUST_PERSONAL_DET_STAT_HIST
+Created statement.
+Executing... DONE
+Execution time: 0:00:59.449699
+
+Writing results to file: full_profile.csv
+
+Processing table: ACC_ICBS_CURRENT_PERIODIC
+Created statement.
+Executing... DONE
+Execution time: 0:00:24.229020
+
+Writing results to file: full_profile.csv
+
+Processing table: CUSTOMER_STATIC_HISTORY
+Created statement.
+Executing... DONE
+Execution time: 0:02:55.108547
+
+Writing results to file: full_profile.csv
+
+Processing table: CARD_ACCOUNT_REL
+Created statement.
+Executing... DONE
+Execution time: 0:00:02.456426
+
+Writing results to file: full_profile.csv
+
+Processing table: CUSTOMER_DETAIL2
+Created statement.
+Executing... DONE
+Execution time: 0:01:06.506408
+
+Writing results to file: full_profile.csv
+
+Processing table: TRANSACTION_CARD_DETAIL_BZWBK
+Created statement.
+Executing... DONE
+Execution time: 0:05:54.972637
+
+Writing results to file: full_profile.csv
+
+Processing table: ACCOUNT_ICBS_DEPOSIT_PERIODIC
+Created statement.
+Executing... DONE
+Execution time: 0:00:53.347616
+
+Writing results to file: full_profile.csv
+
+Processing table: TRANSACTION_DETAIL
+Created statement.
+Executing... DONE
+Execution time: 0:13:31.689750
+
+Writing results to file: full_profile.csv
+
+Processing table: ACCOUNT_DETAIL_PERIODIC
+Created statement.
+Executing... DONE
+Execution time: 0:02:28.382071
+
+Writing results to file: full_profile.csv
+
+Processing table: CUSTOMER_ACCOUNT_REL_PERIODIC
+Created statement.
+Executing... DONE
+Execution time: 0:03:42.034797
+
+Writing results to file: full_profile.csv
+
+Processing table: PRODUCT_BZWBK
+Created statement.
+Executing... DONE
+Execution time: 0:00:00.804003
+
+Writing results to file: full_profile.csv
+Global execution time: 0:35:06.928833
