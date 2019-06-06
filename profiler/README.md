@@ -1,4 +1,4 @@
-# Hurtownia danych w chmurze
+# Profilowanie danych na Teradata
 ## Przydatne linki
 - Teradata (TDExpress16.20_Sles11_20181108052529.7z,
 wersja 40Gb http://downloads.teradata.com/download/files/7671/200501/0/TDExpress16.10_Sles11_40GB.7z):
@@ -42,49 +42,7 @@ Przykład skryptu ładującego dane do tabeli ACC_ICBS_CURRENT_PERIODIC z użyci
   	.LAYOUT Data;  
    	 .FIELD in_WH_ACC_NO  * VARCHAR(30) ;
    	 .FIELD in_ACC_NO  * VARCHAR(16) ;
-   	 .FIELD in_APPROVAL_CDE  * VARCHAR(1) ;
-   	 .FIELD in_INTEREST_INDEX_NO  * VARCHAR(30) ;
-   	 .FIELD in_ACCRUAL_CDE  * VARCHAR(1) ;
-   	 .FIELD in_INT_TYP_CDE  * VARCHAR(1) ;
-   	 .FIELD in_PRNCPL_CR_INT_MAX_RTE  * VARCHAR(30);
-   	 .FIELD in_PRNCPL_CR_INT_MIN_RTE  * VARCHAR(30);
-   	 .FIELD in_IDX_PRNCPL_VARIANCE_RTE  * VARCHAR(30);
-   	 .FIELD in_TERMINATION_DTE  * VARCHAR(30) ;
-   	 .FIELD in_PAID_CR_INT_AMT  * VARCHAR(30);
-   	 .FIELD in_PAID_CR_INT_REF_CRNCY_AMT  * VARCHAR(30);
-   	 .FIELD in_ORIG_DEPOSIT_AMT  * VARCHAR(30);
-   	 .FIELD in_STMT_FREQ_CNT  * VARCHAR(20) ;
-   	 .FIELD in_STMT_FREQ_PERIOD_CDE  * VARCHAR(1) ;
-   	 .FIELD in_STMT_ACC_IND  * VARCHAR(1) ;
-   	 .FIELD in_RECOVERY_PROCESS_IND  * VARCHAR(1) ;
-   	 .FIELD in_CONTRACT_EFF_TMSTMP  * VARCHAR(200);
-   	 .FIELD in_LAST_RENEWAL_DTE  * VARCHAR(1000) ;
-   	 .FIELD in_RENEWAL_CNT  * VARCHAR(600) ;
-   	 .FIELD in_INT_PMT_FREQ_CNT  * VARCHAR(2000) ;
-   	 .FIELD in_INT_PMT_FREQ_PERIOD_CDE  * VARCHAR(1) ;
-   	 .FIELD in_RENEWAL_IND  * VARCHAR(1) ;
-   	 .FIELD in_SRCE_NBP_CLS_CDE  * VARCHAR(3) ;
-   	 .FIELD in_STAFF_OPEN_ID  * VARCHAR(20) ;
-   	 .FIELD in_STAFF_OPEN_SKP_NO  * VARCHAR(30);
-   	 .FIELD in_STAFF_OPEN_BRANCH_NO  * VARCHAR(5) ;
-   	 .FIELD in_STAFF_CLOSE_SKP_NO  * VARCHAR(30);
-   	 .FIELD in_STAFF_CLOSE_BRANCH_NO  * VARCHAR(5) ;
-   	 .FIELD in_LAST_INT_PERIOD_DTE  * VARCHAR(30) ;
-   	 .FIELD in_NXT_INT_PMT_DTE  * VARCHAR(30) ;
-   	 .FIELD in_INT_STAT_CDE  * VARCHAR(1) ;
-   	 .FIELD in_INT_RTE_FREQ_PERIOD_CDE  * VARCHAR(1) ;
-   	 .FIELD in_INT_RTE_FREQ_CNT  * VARCHAR(20) ;
-   	 .FIELD in_INT_RTE_REVIEW_DAY_NO  * VARCHAR(20) ;
-   	 .FIELD in_NXT_RESET_DTE  * VARCHAR(30) ;
-   	 .FIELD in_PREV_RTE_RESET_DTE  * VARCHAR(30) ;
-   	 .FIELD in_LAST_RENEWAL_BAL_AMT  * VARCHAR(30);
-   	 .FIELD in_LAST_CR_BAL_AMT  * VARCHAR(30);
-   	 .FIELD in_LAST_CR_BAL_DTE  * VARCHAR(30) ;
-   	 .FIELD in_MATRIX_NO  * VARCHAR(30);
-   	 .FIELD in_PERIOD_DTE  * VARCHAR(30) ;
-   	 .FIELD in_SRCE_SYS  * VARCHAR(20) ;
-   	 .FIELD in_SRCE_INST  * VARCHAR(20) ;
-   	 .FIELD in_LOAD_LAST_ACTION  * VARCHAR(1) ;
+   	 (... SKIPPED ...)
    	 .FIELD in_LOAD_DTE  * VARCHAR(30) ;
    	 .FIELD in_LOAD_TIME * VARCHAR(30);
 
@@ -93,49 +51,7 @@ Przykład skryptu ładującego dane do tabeli ACC_ICBS_CURRENT_PERIODIC z użyci
   	VALUES (
    	 :in_WH_ACC_NO  ,
    	 :in_ACC_NO  ,
-   	 :in_APPROVAL_CDE  ,
-   	 :in_INTEREST_INDEX_NO  ,
-   	 :in_ACCRUAL_CDE  ,
-   	 :in_INT_TYP_CDE  ,
-   	 :in_PRNCPL_CR_INT_MAX_RTE  ,
-   	 :in_PRNCPL_CR_INT_MIN_RTE  ,
-   	 :in_IDX_PRNCPL_VARIANCE_RTE  ,
-   	 :in_TERMINATION_DTE  ,
-   	 :in_PAID_CR_INT_AMT  ,
-   	 :in_PAID_CR_INT_REF_CRNCY_AMT  ,
-   	 :in_ORIG_DEPOSIT_AMT  ,
-   	 :in_STMT_FREQ_CNT  ,
-   	 :in_STMT_FREQ_PERIOD_CDE  ,
-   	 :in_STMT_ACC_IND  ,
-   	 :in_RECOVERY_PROCESS_IND  ,
-   	 :in_CONTRACT_EFF_TMSTMP  ,
-   	 :in_LAST_RENEWAL_DTE  ,
-   	 :in_RENEWAL_CNT  ,
-   	 :in_INT_PMT_FREQ_CNT  ,
-   	 :in_INT_PMT_FREQ_PERIOD_CDE  ,
-   	 :in_RENEWAL_IND  ,
-   	 :in_SRCE_NBP_CLS_CDE  ,
-   	 :in_STAFF_OPEN_ID  ,
-   	 :in_STAFF_OPEN_SKP_NO  ,
-   	 :in_STAFF_OPEN_BRANCH_NO  ,
-   	 :in_STAFF_CLOSE_SKP_NO  ,
-   	 :in_STAFF_CLOSE_BRANCH_NO  ,
-   	 :in_LAST_INT_PERIOD_DTE  ,
-   	 :in_NXT_INT_PMT_DTE  ,
-   	 :in_INT_STAT_CDE  ,
-   	 :in_INT_RTE_FREQ_PERIOD_CDE  ,
-   	 :in_INT_RTE_FREQ_CNT  ,
-   	 :in_INT_RTE_REVIEW_DAY_NO  ,
-   	 :in_NXT_RESET_DTE  ,
-   	 :in_PREV_RTE_RESET_DTE  ,
-   	 :in_LAST_RENEWAL_BAL_AMT  ,
-   	 :in_LAST_CR_BAL_AMT  ,
-   	 :in_LAST_CR_BAL_DTE  ,
-   	 :in_MATRIX_NO  ,
-   	 :in_PERIOD_DTE  ,
-   	 :in_SRCE_SYS  ,
-   	 :in_SRCE_INST  ,
-   	 :in_LOAD_LAST_ACTION  ,
+   	 (... SKIPPED ...)
    	 :in_LOAD_DTE  ,
    	 :in_LOAD_TIME
   	);
@@ -186,3 +102,13 @@ Jesli konfiguracja jest poprawna skrpyt powinien wykonac sie bez problemu po wpi
 Aby wyswietlic liste dostepnych parametrow, wpisz:
 
 ```python app.py --help```
+
+Przykładowe uruchomienie dla bazy danych `vmtest` dla wszytskich tabel, z zapisaniem wyników do pliku `full_profile.csv`:
+
+```python app.py -d vmtest -o full_profile.csv```
+
+Wyniki wywołania tego polecenia na instancji VMWare z przydzielonym 1 rdzeniem procesora (Intell Core i5 4210H) i 8GB pamięci RAM:
+
+[full_profile.csv](full_profile.csv)
+
+[full_profile.stdout](full_profile.stdout)
