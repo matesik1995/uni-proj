@@ -2,6 +2,7 @@ import teradata
 from datetime import datetime
 import argparse
 import csv
+import math
 
 # Dictionary of kev:value pairs, where
 #   key - is a symbol of column type
@@ -81,7 +82,7 @@ class Column:
 		return "Column(name='{}', type='{}')".format(self.name, self.type)
 	
 # main function	
-def main(database_name, table_names, output_fn, debug):
+def main(database_name, table_names, output_fn, debug, partition):
 	g_t1 = datetime.now()
 	udaExec = teradata.UdaExec()		# create udaExec framework entry point, load configuration from udaexec.ini
 	with open(output_fn, 'w' ,newline='') as csvfile:		# open file for output
@@ -106,36 +107,58 @@ def main(database_name, table_names, output_fn, debug):
 				print("\nProcessing table: {}".format(table.name))
 				if debug: 
 					print(table)
-				stmnt = "SELECT COUNT(*) as record_count"		# prepare statement for table
-				for column in table.columns:		# each column queries are added to single statement for better performance
-					try: 
-						stmnt += ", " + STATISTICS_QUERY_BY_TYPE[column.type].replace("%col%", column.name)		# queries for statistics are chosen based on column type
-					except KeyError as e:
-						print("\t\tWarning: Unknown column type: {}".format(e))		# warning is printed if there is no query associated with column type
-				stmnt += " FROM {database_name}.".format(database_name=database_name) + table.name + ";"
+					
+				stmnts = []
+				if partition == 0:		# if partition nubmer not set, create one statement
+					stmnt = "SELECT COUNT(*) as record_count"		# prepare statement for table
+					for column in table.columns:		# each column queries are added to single statement for better performance
+						try: 
+							stmnt += ", " + STATISTICS_QUERY_BY_TYPE[column.type].replace("%col%", column.name)		# queries for statistics are chosen based on column type
+						except KeyError as e:
+							print("\t\tWarning: Unknown column type: {}".format(e))		# warning is printed if there is no query associated with column type
+					stmnt += " FROM {database_name}.".format(database_name=database_name) + table.name + ";"
+					stmnts = [stmnt]
+				else:		# otherwise split statement into smaller ones
+					parts = []
+					for i in range(0, len(table.columns), partition):
+						parts.append(table.columns[i:i + partition])
+					
+					for part in parts:
+						stmnt = "SELECT COUNT(*) as record_count"		# prepare statement for table
+						for column in part:
+							try: 
+								stmnt += ", " + STATISTICS_QUERY_BY_TYPE[column.type].replace("%col%", column.name)		# queries for statistics are chosen based on column type
+							except KeyError as e:
+								print("\t\tWarning: Unknown column type: {}".format(e))		# warning is printed if there is no query associated with column type
+						stmnt += " FROM {database_name}.".format(database_name=database_name) + table.name + ";"
+						stmnts.append(stmnt)				
 				 
-				print("Created statement.")
+				print("Created statements.")
 				if debug:
-					print("Statement: {}".format(stmnt))
-				print("Executing... ", end='', flush=True)
-				t1 = datetime.now()
-				cur = session.execute(stmnt)		#execute statement and calculate time elapsed 
-				row = cur.fetchone()
-				execution_time = datetime.now() - t1
-				print("DONE")
-				print("Execution time: {}".format(execution_time))
-				
-				print("\nWriting results to file: {}".format(output_fn))
-				for column in row.columns:		# save results to csv file
-					try:
-						column_name, metric_name = column.split('___')		# split output column name by `___` which delimeters column name and metric
-					except ValueError:
-						column_name = '*'
-						metric_name = column
-					result_row = [table.name, column_name, metric_name, str(row[column]), str(execution_time)]		# create row for csv file. Table Name, Column Name, Metric Name, Metric Value, Execution time
-					output.writerow(result_row)		# save row
-					if debug:
-						print(result_row)
+					print("Statements: {}".format(stmnts))
+				print("Executing... ")
+				i = 1
+				for stmnt in stmnts:
+					print("- Part {} ".format(i), end='', flush=True)
+					i += 1
+					t1 = datetime.now()
+					cur = session.execute(stmnt)		#execute statement and calculate time elapsed 
+					row = cur.fetchone()
+					execution_time = datetime.now() - t1
+					print("DONE")
+					print("Execution time: {}".format(execution_time))
+					
+					print("\nWriting results to file: {}".format(output_fn))
+					for column in row.columns:		# save results to csv file
+						try:
+							column_name, metric_name = column.split('___')		# split output column name by `___` which delimeters column name and metric
+						except ValueError:
+							column_name = '*'
+							metric_name = column
+						result_row = [table.name, column_name, metric_name, str(row[column]), str(execution_time)]		# create row for csv file. Table Name, Column Name, Metric Name, Metric Value, Execution time
+						output.writerow(result_row)		# save row
+						if debug:
+							print(result_row)
 					
 	print("Global execution time: {}".format(datetime.now() - g_t1))
 		
@@ -145,8 +168,9 @@ def main(database_name, table_names, output_fn, debug):
 if __name__=="__main__":
 	parser = argparse.ArgumentParser(description='TeraDataProfiler v0.1')
 	parser.add_argument('-d', '--database', default='vmtest', help='database name')
-	parser.add_argument('-t', '--tables', metavar='TABLE_NAME', nargs='*', default=[], help='list of tables to be processed')
 	parser.add_argument('-o', '--output', default='output.csv', help='output csv filename')
+	parser.add_argument('-p', '--partition', metavar='N', type=int, default=0, help='partition profiling queries by N columns') 
+	parser.add_argument('-t', '--tables', metavar='TABLE_NAME', nargs='*', default=[], help='list of tables to be processed')
 	parser.add_argument('-v', '--verbose', action='store_true', help='make output verbose')
 	args = parser.parse_args()
-	main(args.database, args.tables, args.output, args.verbose)
+	main(args.database, args.tables, args.output, args.verbose, args.partition)
