@@ -88,7 +88,7 @@ def main(database_name, table_names, output_fn, debug, partition):
 	with open(output_fn, 'w' ,newline='') as csvfile:		# open file for output
 		output = csv.writer(csvfile)		# create output csv writer 
 		output.writerow(["Table Name", "Column Name", "Metric Name", "Metric Value", "Execution time"]) 		# write header row to csv file
-		with udaExec.connect(method="${method}", dsn="${dsn}") as session: 		# connect to TeraData instance and save connectin as session
+		with udaExec.connect(method="${method}", dsn="${dsn}", USEREGIONALSETTINGS='N') as session: 		# connect to TeraData instance and save connectin as session
 			_tables = {}		# temporary tables list
 			for row in session.execute("""SELECT TRIM(TableName) as table_name, TRIM(ColumnName) as column_name, TRIM(ColumnType) as column_type 
 										  FROM dbc.columns WHERE DatabaseName = '{database_name}';""".format(database_name=database_name)):
