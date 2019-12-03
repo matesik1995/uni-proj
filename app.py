@@ -19,7 +19,7 @@ def o_n(b, n):
     :param n: number of nodes
     :return: number of data transfers over network
     """
-    return b / n
+    return b / n * (n - 1)
 
 
 def calculate_one(data_size, memory_size, number_of_nodes, block_size):
@@ -61,7 +61,7 @@ def hadoop_cluster():
     ntw = nt / network_thru
 
     time_disk = dow / node_number
-    time_net = ntw / node_number
+    time_net = ntw / node_number / (node_number - 1)
     time = time_disk + time_net
 
     print("Summary:")
@@ -91,7 +91,7 @@ def spark_cluster():
     ntw = nt / network_thru
 
     time_disk = dow / node_number
-    time_net = ntw / node_number
+    time_net = ntw / node_number / (node_number - 1)
     time = time_disk + time_net
 
     print("Summary:")
