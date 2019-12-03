@@ -1,4 +1,4 @@
-from math import log
+from math import log, ceil
 
 
 def o_m(n, m, b):
@@ -19,7 +19,7 @@ def o_n(b, n):
     :param n: number of nodes
     :return: number of data transfers over network
     """
-    return b / n * (n - 1)
+    return b / n
 
 
 def calculate_one(data_size, memory_size, number_of_nodes, block_size):
@@ -50,18 +50,18 @@ def hadoop_cluster():
     data_size = 1e+14  # 100TB
     node_memory_size = 64e+9  # 64GB
     node_number = 2100
-    disk_block_size = 512  # number of bytes per block
+    disk_block_size = 4096  # number of bytes per block
 
-    disk_thru = 8e+7  # 80Mbps
-    network_thru = 1e+10  # 10Gbps
+    disk_thru = 8e+7  # 80MBps
+    network_thru = 1.25e+9  # 10Gbps
 
     do, nt = calculate(data_size, node_memory_size, node_number, disk_block_size)
 
     dow = (do * disk_block_size) / disk_thru
     ntw = nt / network_thru
 
-    time_disk = dow
-    time_net = ntw
+    time_disk = dow / node_number
+    time_net = ntw / node_number
     time = time_disk + time_net
 
     print("Summary:")
@@ -80,18 +80,18 @@ def spark_cluster():
     data_size = 1e+14  # 100TB
     node_memory_size = 244e+9  # 244GB
     node_number = 207
-    disk_block_size = 512_000  # number of bytes per block
+    disk_block_size = 4096  # number of bytes per block
 
-    disk_thru = 5e+8  # 500Mbps
-    network_thru = 1e+10  # 10Gbps
+    disk_thru = 3e+9  # 3GBps
+    network_thru = 1.25e+9  # 10Gbps
 
     do, nt = calculate(data_size, node_memory_size, node_number, disk_block_size)
 
     dow = (do * disk_block_size) / disk_thru
     ntw = nt / network_thru
 
-    time_disk = dow
-    time_net = ntw
+    time_disk = dow / node_number
+    time_net = ntw / node_number
     time = time_disk + time_net
 
     print("Summary:")
