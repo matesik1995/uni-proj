@@ -28,7 +28,7 @@ shinyServer(function(input, output) {
     output$targetPlot <- renderPlot({
         train %>%
             ggplot(aes(trip_duration)) +
-            geom_histogram(fill = "red", bins = input$bins) +
+            geom_histogram(fill = "#3c8dbc", bins = input$bins) +
             scale_x_log10() +
             scale_y_sqrt()
     })
@@ -48,13 +48,13 @@ shinyServer(function(input, output) {
         
         leaflet(data = foo) %>% addProviderTiles("Esri.NatGeoWorldMap") %>%
             addCircleMarkers(~ pickup_longitude, ~pickup_latitude, radius = 1,
-                             color = "blue", fillOpacity = 0.3)
+                             color = "#3c8dbc", fillOpacity = 0.3)
     })
     
     output$pickupDateWhole <- renderPlot({
         train %>%
             ggplot(aes(pickup_datetime)) +
-            geom_histogram(fill = "red", bins = input$pickupDateWholeBins) +
+            geom_histogram(fill = "#3c8dbc", bins = input$pickupDateWholeBins) +
             labs(x = "Pickup dates")
     })
     
@@ -63,14 +63,14 @@ shinyServer(function(input, output) {
         train %>%
             filter(pickup_datetime > ymd(input$pickupDateFromDate) & pickup_datetime < ymd(input$pickupDateToDate)) %>%
             ggplot(aes(pickup_datetime)) +
-            geom_histogram(fill = "red", bins = input$pickupDateSelectBins) +
+            geom_histogram(fill = "#3c8dbc", bins = input$pickupDateSelectBins) +
             labs(x = "Narrowed pickup dates")
     })
     
     output$dropoffDateWhole <- renderPlot({
         train %>%
             ggplot(aes(dropoff_datetime)) +
-            geom_histogram(fill = "blue", bins = input$dropoffDateWholeBins) +
+            geom_histogram(fill = "#3c8dbc", bins = input$dropoffDateWholeBins) +
             labs(x = "Dropoff dates")
     })
     
@@ -78,22 +78,22 @@ shinyServer(function(input, output) {
         train %>%
             filter(dropoff_datetime > ymd(input$dropoffDateFromDate) & dropoff_datetime < ymd(input$dropoffDateToDate)) %>%
             ggplot(aes(dropoff_datetime)) +
-            geom_histogram(fill = "blue", bins = input$dropoffDateSelectBins) +
+            geom_histogram(fill = "#3c8dbc", bins = input$dropoffDateSelectBins) +
             labs(x = "Narrowed dropoff dates")
     })
     
     output$storeFwdFlag <- renderPlot({
         train %>%
             ggplot(aes(store_and_fwd_flag)) +
-            geom_bar() +
+            geom_bar(fill = "#3c8dbc") +
             theme(legend.position = "none") +
             scale_y_log10()
     })
     
     output$vendors <- renderPlot({
         train %>%
-            ggplot(aes(vendor_id, fill = vendor_id)) +
-            geom_bar() +
+            ggplot(aes(vendor_id)) +
+            geom_bar(fill = "#3c8dbc") +
             theme(legend.position = "none")
     })
     
@@ -101,8 +101,8 @@ shinyServer(function(input, output) {
         train %>%
             group_by(passenger_count) %>%
             count() %>%
-            ggplot(aes(passenger_count, n, fill = passenger_count)) +
-            geom_col() +
+            ggplot(aes(passenger_count, n)) +
+            geom_col(fill = "#3c8dbc") +
             scale_y_sqrt() +
             theme(legend.position = "none")
     })
