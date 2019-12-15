@@ -123,23 +123,41 @@ dashboardPage(
                     id = "datetabset",  width = 12,
                     tabPanel(
                         "Pickup date",
-                        plotOutput("pickupDateWhole"),
-                        sliderInput("pickupDateWholeBins", "Number of bins:", 1, 360, 180),
-                        plotOutput("pickupDateSelect"),
-                        dateInput("pickupDateFromDate", "From:", value = "2016-01-20"),
-                        dateInput("pickupDateToDate", "To:", value = "2016-02-05"),
-                        sliderInput("pickupDateSelectBins", "Number of bins:", 1, 360, 180)
+                        conditionalPanel(
+                            condition = "input.pickupDateSelect == false",
+                            plotOutput("pickupDateWhole")
+                        ),
+                        conditionalPanel(
+                            condition = "input.pickupDateSelect == true",
+                            plotOutput("pickupDateSelect")
+                        ),
+                        sliderInput("pickupDateBins", "Number of bins:", 1, 360, 180),
+                        checkboxInput("pickupDateSelect", "Constrain by date"),
+                        conditionalPanel(
+                            condition = "input.pickupDateSelect == true",
+                            dateInput("pickupDateFromDate", "From:", value = "2016-01-20"),
+                            dateInput("pickupDateToDate", "To:", value = "2016-02-05")
+                        )
                     ),
-                    tabPanel("Arrival date",
-                         plotOutput("dropoffDateWhole"),
-                         sliderInput("dropoffDateWholeBins", "Number of bins:", 1, 360, 180),
-                         plotOutput("dropoffDateSelect"),
-                         dateInput("dropoffDateFromDate", "From:", value = "2016-01-20"),
-                         dateInput("dropoffDateToDate", "To:", value = "2016-02-05"),
-                         sliderInput("dropoffDateSelectBins", "Number of bins:", 1, 360, 180)
+                    tabPanel(
+                        "Arrival date",
+                        conditionalPanel(
+                            condition = "input.dropoffDateSelect == false",
+                            plotOutput("dropoffDateWhole")
+                        ),
+                        conditionalPanel(
+                            condition = "input.dropoffDateSelect == true",
+                            plotOutput("dropoffDateSelect")
+                        ),
+                        sliderInput("dropoffDateBins", "Number of bins:", 1, 360, 180),
+                        checkboxInput("dropoffDateSelect", "Constrain by date"),
+                        conditionalPanel(
+                            condition = "input.dropoffDateSelect == true",
+                            dateInput("dropoffDateFromDate", "From:", value = "2016-01-20"),
+                            dateInput("dropoffDateToDate", "To:", value = "2016-02-05")
+                        )
                     )
-                ),
-                div(style = "opacity: 0", "spacing")
+                )
             ),
             tabItem(
                 tabName = "more-information",

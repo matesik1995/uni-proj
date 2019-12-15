@@ -54,7 +54,7 @@ shinyServer(function(input, output) {
     output$pickupDateWhole <- renderPlot({
         train %>%
             ggplot(aes(pickup_datetime)) +
-            geom_histogram(fill = "#3c8dbc", bins = input$pickupDateWholeBins) +
+            geom_histogram(fill = "#3c8dbc", bins = input$pickupDateBins) +
             labs(x = "Pickup dates")
     })
     
@@ -63,14 +63,14 @@ shinyServer(function(input, output) {
         train %>%
             filter(pickup_datetime > ymd(input$pickupDateFromDate) & pickup_datetime < ymd(input$pickupDateToDate)) %>%
             ggplot(aes(pickup_datetime)) +
-            geom_histogram(fill = "#3c8dbc", bins = input$pickupDateSelectBins) +
+            geom_histogram(fill = "#3c8dbc", bins = input$pickupDateBins) +
             labs(x = "Narrowed pickup dates")
     })
     
     output$dropoffDateWhole <- renderPlot({
         train %>%
             ggplot(aes(dropoff_datetime)) +
-            geom_histogram(fill = "#3c8dbc", bins = input$dropoffDateWholeBins) +
+            geom_histogram(fill = "#3c8dbc", bins = input$dropoffDateBins) +
             labs(x = "Dropoff dates")
     })
     
@@ -78,7 +78,7 @@ shinyServer(function(input, output) {
         train %>%
             filter(dropoff_datetime > ymd(input$dropoffDateFromDate) & dropoff_datetime < ymd(input$dropoffDateToDate)) %>%
             ggplot(aes(dropoff_datetime)) +
-            geom_histogram(fill = "#3c8dbc", bins = input$dropoffDateSelectBins) +
+            geom_histogram(fill = "#3c8dbc", bins = input$dropoffDateBins) +
             labs(x = "Narrowed dropoff dates")
     })
     
