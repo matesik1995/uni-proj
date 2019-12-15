@@ -127,4 +127,32 @@ shinyServer(function(input, output) {
             labs(x = "Hour of the day", y = "Median trip duration [min]") +
             theme(legend.position = "none")
     })
+    
+    output$relation2_1 <- renderPlot({
+        train %>%
+            ggplot(aes(passenger_count, trip_duration, color = passenger_count)) +
+            geom_boxplot() +
+            scale_y_log10() +
+            theme(legend.position = "none") +
+            facet_wrap(~ vendor_id) +
+            labs(y = "Trip duration [s]", x = "Number of passengers")
+    })
+    
+    output$relation2_2 <- renderPlot({
+        train %>%
+            ggplot(aes(trip_duration, fill = vendor_id)) +
+            geom_density(position = "stack") +
+            scale_x_log10()
+    })
+    
+    output$relation3 <- renderPlot({
+        train %>%
+            filter(vendor_id == 1) %>%
+            ggplot(aes(passenger_count, trip_duration, color = passenger_count)) +
+            geom_boxplot() +
+            scale_y_log10() +
+            facet_wrap(~ store_and_fwd_flag) +
+            theme(legend.position = "none") +
+            labs(y = "Trip duration [s]", x = "Number of passengers")
+    })
 })

@@ -195,10 +195,12 @@ dashboardPage(
                 tabName = "relation2",
                 box(
                     title = "Passenger count and Vendor and trip duration", status = "primary", solidHeader = TRUE, width = 12,
+                    plotOutput("relation2_1"),
+                    plotOutput("relation2_2")
                 ),
                 box(
                     status = "primary", solidHeader = TRUE, width = 12,
-                    div("TODO")
+                    div("We find that both vendors have short trips without any passengers. Vendor 1 has all of the trips beyond 24 hours, whereas vendor 2 has all of the (five) trips with more than six passengers and many more trips that approach the 24-hour limit. Between 1 and 6 passengers the median trip durations are remarkably similar, in particular for vendor 2. There might be differences for vendor 1, but they are small")
                 ),
                 div(style = "opacity: 0", "spacing") 
             ),
@@ -206,10 +208,11 @@ dashboardPage(
                 tabName = "relation3",
                 box(
                     title = "Store and Forward and trip duration", status = "primary", solidHeader = TRUE, width = 12,
+                    plotOutput("relation3")
                 ),
                 box(
                     status = "primary", solidHeader = TRUE, width = 12,
-                    div("TODO")
+                    div("We find that there is no overwhelming differences between the stored and non-stored trips. The stored ones might be slightly longer, though, and don’t include any of the suspiciously long trips.")
                 ),
                 div(style = "opacity: 0", "spacing") 
             )
